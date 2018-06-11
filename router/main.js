@@ -39,6 +39,13 @@ module.exports = (app, fs) => {
 		})
 	});
 
+	app.get('/board/list',  (req,res) => {
+		const sql = "SELECT * FROM board";
+		con.query(sql, function (err, results) {
+			res.json(results)
+		})
+	});
+
 	app.get('/board/view/:idx',  (req,res) => {
 		var idx = req.params.idx;
 		const sql = 'SELECT * FROM board where idx = '+idx;
@@ -54,8 +61,6 @@ module.exports = (app, fs) => {
 				renderData['list'] = results[0]
 			}
 			res.render('board/view', renderData)
-			console.log(sql)
-			console.log(renderData)
 		})
 	});
 
