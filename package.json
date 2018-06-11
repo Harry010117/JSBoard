@@ -1,9 +1,9 @@
 {
-  "name": "js-board",
-  "version": "1.0.0",
-  "dependencies": {
-    "ejs": "~2.4.1",
-    "express": "~4.13.1",
-    "npm": "^6.1.0"
-  }
+	"name": "js-board",
+	"version": "1.0.0",
+	"dependencies": {
+		"ejs": "~2.4.1",
+		"body-parser": "~1.14.2",
+		"express-session": "~1.13.0"
+	}
 }
