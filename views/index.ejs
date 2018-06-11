@@ -2,10 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title><%= title %></title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	Aboutttttt
+	<h1>Loop</h1>
+	<ul>
+		<% for(var i=0; i<length; i++) { %>
+		<li>
+			<%= "loop"+i %>
+		</li>
+		<% } %>
+	</ul>
 </body>
 </html>
