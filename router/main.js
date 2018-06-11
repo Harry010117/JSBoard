@@ -6,9 +6,9 @@ const con = mysql.createConnection({
 	database:'mvc'
 })
 
-con.connect(function(arr){
-	if(arr){
-		console.log(arr)
+con.connect(function(err){
+	if(err){
+		console.log(err)
 	} else {
 		console.log('mysql connected')
 	}
@@ -30,7 +30,6 @@ module.exports = (app, fs) => {
 			err:null
 		}
 		con.query(sql, function (err, results) {
-			console.log(results)
 			if (err) {
 				renderData['err'] = "에러 발생"
 			} else {
@@ -41,9 +40,22 @@ module.exports = (app, fs) => {
 	});
 
 	app.get('/board/view/:idx',  (req,res) => {
-		res.render('board/view', {
+		var idx = req.params.idx;
+		const sql = 'SELECT * FROM board where idx = '+idx;
+		let renderData = {
 			title: "게시글 조회",
-			idx: req.params.idx
+			list:null,
+			err:null
+		}
+		con.query(sql, function (err, results) {
+			if (err) {
+				renderData['err'] = "에러 발생"
+			} else {
+				renderData['list'] = results[0]
+			}
+			res.render('board/view', renderData)
+			console.log(sql)
+			console.log(renderData)
 		})
 	});
 

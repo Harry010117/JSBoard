@@ -8,7 +8,26 @@
 <body>
 	<h1><%= title %></h1>
 	<table>
-		
+		<tr>
+			<th>글번호</th>
+			<td><%= list.idx %></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><%= list.date %></td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td><%= list.writer %></td>
+		</tr>
+		<tr>
+			<th>제목</th>
+			<td><%= list.subject %></td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td><%= list.content %></td>
+		</tr>
 	</table>
 </body>
 </html>
