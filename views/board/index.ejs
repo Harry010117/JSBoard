@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><%= title %></title>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+	<h1><%= title %></h1>
+	<% if (err == null) { %>
+	<ul>
+		<% for (var i=0, len = list.length; i<len; i++) { %>
+		<li>
+			<%= list[i].idx%> /
+			<%= list[i].subject%> /
+			<%= list[i].writer%> /
+			<%= list[i].date%>
+		</li>
+		<% } %>	
+	</ul>
+	<% } else { %>
+	<p><%= err %></p>
+	<% }  %>
+</body>
+</html>
