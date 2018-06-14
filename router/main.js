@@ -14,15 +14,23 @@ con.connect((err) => {
 	}
 })
 
+function fullDate(dateIn) {
+	var year = dateIn.getFullYear();
+	var month = dateIn.getMonth()+1;
+	var date = dateIn.getDate();
+	var fDate = yyyy +"/"+ mm +"/"+ dd;
+	return fDate;
+}
+
 module.exports = (app, fs) => {
-	app.get('/',  (req,res) => {
+	app.get('/', (req,res) => {
 		res.render('index', {
 			title: "Mypage",
 			length: 20
 		})
 	});
 
-	app.get('/board',  (req,res) => {
+	app.get('/board', (req,res) => {
 		const sql = "SELECT * FROM board";
 		let renderData = {
 			title:"게시판 리스트",
@@ -39,7 +47,7 @@ module.exports = (app, fs) => {
 		})
 	});
 
-	app.get('/board/view/:idx',  (req,res) => {
+	app.get('/board/view/:idx', (req,res) => {
 		var idx = req.params.idx;
 		const sql = 'SELECT * FROM board where idx = '+idx;
 		let renderData = {
@@ -57,13 +65,13 @@ module.exports = (app, fs) => {
 		})
 	});
 
-	app.get('/board/write',  (req,res) => {
+	app.get('/board/write', (req,res) => {
 		res.render('board/write', {
 			title: "게시글 작성"
 		})
 	});
 
-	app.get('/board/write/:idx',  (req,res) => {
+	app.get('/board/write/:idx', (req,res) => {
 		res.render('board/update', {
 			title: "게시글 수정",
 			idx: req.params.idx
