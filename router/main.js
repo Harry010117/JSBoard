@@ -6,7 +6,7 @@ const con = mysql.createConnection({
 	database:'mvc'
 })
 
-con.connect(function(err){
+con.connect((err) => {
 	if(err){
 		console.log(err)
 	} else {
@@ -18,7 +18,7 @@ module.exports = (app, fs) => {
 	app.get('/',  (req,res) => {
 		res.render('index', {
 			title: "Mypage",
-			length: 200
+			length: 20
 		})
 	});
 
@@ -29,20 +29,13 @@ module.exports = (app, fs) => {
 			list:null,
 			err:null
 		}
-		con.query(sql, function (err, results) {
+		con.query(sql, (err, results) => {
 			if (err) {
 				renderData['err'] = "에러 발생"
 			} else {
 				renderData['list'] = results
 			}
 			res.render('board/index', renderData)
-		})
-	});
-
-	app.get('/board/list',  (req,res) => {
-		const sql = "SELECT * FROM board";
-		con.query(sql, function (err, results) {
-			res.json(results)
 		})
 	});
 
@@ -54,7 +47,7 @@ module.exports = (app, fs) => {
 			list:null,
 			err:null
 		}
-		con.query(sql, function (err, results) {
+		con.query(sql, (err, results) => {
 			if (err) {
 				renderData['err'] = "에러 발생"
 			} else {
