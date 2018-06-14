@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title><%= title %></title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
+<% include ./header.ejs %>
 	<h1><%= title %></h1>
+	<a href="/board/write">글수정</a>
+	<a href="/board/write">글삭제</a>
 	<table>
 		<tr>
 			<th>글번호</th>
@@ -14,7 +9,7 @@
 		</tr>
 		<tr>
 			<th>작성일</th>
-			<td><%= list.date %></td>
+			<td><%= fullDate(list.date) %></td>
 		</tr>
 		<tr>
 			<th>작성자</th>
@@ -29,5 +24,5 @@
 			<td><%= list.content %></td>
 		</tr>
 	</table>
-</body>
-</html>
+	<a href="/board">메인으로</a>
+<% include ./footer.ejs %>

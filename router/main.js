@@ -1,3 +1,4 @@
+const moment = require('moment')
 const mysql = require('mysql')
 const con = mysql.createConnection({
 	host: 'localhost',
@@ -15,18 +16,13 @@ con.connect((err) => {
 })
 
 function fullDate(dateIn) {
-	var year = dateIn.getFullYear();
-	var month = dateIn.getMonth()+1;
-	var date = dateIn.getDate();
-	var fDate = yyyy +"/"+ mm +"/"+ dd;
-	return fDate;
+	return moment(dateIn).format('YYYY-MM-DD');
 }
-
+ 
 module.exports = (app, fs) => {
 	app.get('/', (req,res) => {
 		res.render('index', {
-			title: "Mypage",
-			length: 20
+			title: "Mypage"
 		})
 	});
 
@@ -35,7 +31,8 @@ module.exports = (app, fs) => {
 		let renderData = {
 			title:"게시판 리스트",
 			list:null,
-			err:null
+			err:null,
+			fullDate:fullDate
 		}
 		con.query(sql, (err, results) => {
 			if (err) {
@@ -53,7 +50,8 @@ module.exports = (app, fs) => {
 		let renderData = {
 			title: "게시글 조회",
 			list:null,
-			err:null
+			err:null,
+			fullDate:fullDate
 		}
 		con.query(sql, (err, results) => {
 			if (err) {
@@ -66,9 +64,18 @@ module.exports = (app, fs) => {
 	});
 
 	app.get('/board/write', (req,res) => {
+		var idx = req.params.idx;
 		res.render('board/write', {
-			title: "게시글 작성"
+			title: "게시글 작성",
+			idx: idx
 		})
+	});
+
+	app.post('/board/write', (req,res) => {
+		const subject = req.body.subject
+		const writer = req.body.writer
+		const content = req.body.content
+		const sql = `insert into board set subject = '${subject},'writer = '${writer},'content = '${content}', date = now(), change_date = now()`
 	});
 
 	app.get('/board/write/:idx', (req,res) => {

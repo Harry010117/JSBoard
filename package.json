@@ -6,6 +6,7 @@
 		"ejs": "~2.4.1",
 		"express": "~4.13.1",
 		"express-session": "~1.13.0",
+		"moment": "^2.22.2",
 		"mysql": "^2.15.0"
 	}
 }

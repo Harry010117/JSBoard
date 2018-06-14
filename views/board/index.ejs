@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title><%= title %></title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
+<% include ./header.ejs %>
 	<h1><%= title %></h1>
+	<a href="/board/write">글작성</a>
 	<% if (err == null) { %>
 	<table>
 		<tr>
@@ -31,5 +25,5 @@
 	<% } else { %>
 	<p><%= err %></p>
 	<% }  %>
-</body>
-</html>
+
+<% include ./footer.ejs %>
