@@ -44,6 +44,13 @@ module.exports = (app, fs) => {
 		})
 	});
 
+	app.get('/board/list', (req,res) => {
+		const sql = "SELECT * FROM board";
+		con.query(sql, (err, results) => {
+			res.json(results)
+		})
+	});
+
 	app.get('/board/view/:idx', (req,res) => {
 		var idx = req.params.idx;
 		const sql = 'SELECT * FROM board where idx = '+idx;
@@ -75,7 +82,10 @@ module.exports = (app, fs) => {
 		const subject = req.body.subject
 		const writer = req.body.writer
 		const content = req.body.content
-		const sql = `insert into board set subject = '${subject},'writer = '${writer},'content = '${content}', date = now(), change_date = now()`
+		const sql = `insert into board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now()`
+		con.query(sql, (err, results) => {
+			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
+		})
 	});
 
 	app.get('/board/write/:idx', (req,res) => {
