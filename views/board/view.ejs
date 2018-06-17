@@ -1,7 +1,7 @@
 <% include ./header.ejs %>
 	<h1><%= title %></h1>
-	<a href="/board/write">글수정</a>
-	<a href="/board/write">글삭제</a>
+	<a href="/board/update/<%= list.idx %>">글수정</a>
+	<a href="/board/delete/<%= list.idx %>">글삭제</a>
 	<table>
 		<tr>
 			<th>글번호</th>

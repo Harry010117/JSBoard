@@ -88,10 +88,36 @@ module.exports = (app, fs) => {
 		})
 	});
 
-	app.get('/board/write/:idx', (req,res) => {
-		res.render('board/update', {
+	app.get('/board/update/:idx', (req,res) => {
+		var idx = req.params.idx;
+		const sql = 'SELECT * FROM board where idx = '+idx;
+		let renderData = {
 			title: "게시글 수정",
-			idx: req.params.idx
+			list:null,
+			err:null,
+			fullDate:fullDate,
+			idx: idx
+		}
+		con.query(sql, (err, results) => {
+			if (err) {
+				renderData['err'] = "에러 발생"
+			} else {
+				renderData['list'] = results[0]
+			}
+			res.render('board/update', renderData)
 		})
+
+		app.post('/board/update', (req,res) => {
+		var idx = req.params.idx;
+		console.log(idx)
+		const subject = req.body.subject
+		const writer = req.body.writer
+		const content = req.body.content
+		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now() where idx =${idx}`;
+		con.query(sql, (err, results) => {
+			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
+			console.log(sql)
+		})
+	});
 	});
 }
