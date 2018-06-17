@@ -107,7 +107,7 @@ module.exports = (app, fs) => {
 			res.render('board/update', renderData)
 		})
 
-		app.post('/board/update', (req,res) => {
+		app.post('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
 		console.log(idx)
 		const subject = req.body.subject
