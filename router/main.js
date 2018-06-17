@@ -109,14 +109,29 @@ module.exports = (app, fs) => {
 
 		app.post('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
-		console.log(idx)
 		const subject = req.body.subject
 		const writer = req.body.writer
 		const content = req.body.content
 		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now() where idx =${idx}`;
 		con.query(sql, (err, results) => {
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
+		})
+		});
+
+		app.get('/board/delete/:idx', (req,res) => {
+		var idx = req.params.idx;
+		res.render('board/delete', {
+			title: "삭제중..",
+			idx: idx
+		})
+	});
+
+	app.post('/board/delete/:idx', (req,res) => {
+		var idx = req.params.idx;
+		const sql = `delete from board where idx=${idx}`
+		con.query(sql, (err, results) => {
 			console.log(sql)
+			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
 		})
 	});
 	});
