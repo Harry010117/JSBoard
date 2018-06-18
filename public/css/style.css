@@ -2,5 +2,11 @@ body { background: #fff; color: #000;}
 form { width: 40%; height: 75%; }
 textarea { resize: none; }
 a { text-decoration: none; color: #000; }
-table { width: 1200px; height: 500px; }
-th,td { border: 1px solid #000; }
+.list { width: 1200px; }
+.view { width: 1200px; height: 500px; }
+.view tr:nth-child(1),
+.view tr:nth-child(2) { height: 25px; }
+.list tr,
+.view tr:nth-child(3) { height: 50px; }
+table, th, td { border: 1px solid #000; text-align: center; }
+.subject { width: 500px; height: 21px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

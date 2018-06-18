@@ -1,8 +1,19 @@
 <% include ./header.ejs %>
-	<h1><%= title %></h1>
+	<% if (session) { -%>
+		<p><%= session%></p>
+		<a href="/board/logout">로그아웃</a>
+	<% } else { -%>
+		<a href="/board/login">로그인</a>
+	<% } -%>
 	<a href="/board/write">글작성</a>
 	<% if (err == null) { %>
-	<table cellspacing="0">
+	<table cellspacing="0" class="list">
+		<colgroup>
+			<col width="10%">
+			<col width="40%">
+			<col width="25%">
+			<col width="25%">
+		</colgroup>
 		<tr>
 			<th>글번호</th>
 			<th>제목</th>
@@ -13,7 +24,7 @@
 		<tr>
 			<td><%= list[i].idx%></td>
 			<td>
-				<a href="./board/view/<%= list[i].idx%>">
+				<a class="subject" href="./board/view/<%= list[i].idx%>">
 					<%= list[i].subject%>
 				</a>
 			</td>

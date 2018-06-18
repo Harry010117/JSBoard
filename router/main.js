@@ -18,12 +18,44 @@ con.connect((err) => {
 function fullDate(dateIn) {
 	return moment(dateIn).format('YYYY-MM-DD');
 }
- 
+
 module.exports = (app, fs) => {
+
 	app.get('/', (req,res) => {
+		session = req.session;
 		res.render('index', {
 			title: "Mypage"
 		})
+	});
+
+	app.get('/board/login', (req,res) => {
+		res.render('board/login',{
+			title:'로그인 페이지'
+		})
+	});
+
+	app.post('/board/login', (req,res) => {
+		const id = req.body.id
+		const pw = req.body.pw
+		const sql = `select *, count(*) as cnt from member where id = '${id}' and pw = '${pw}'`
+		con.query(sql, (err, results) => {
+			if (results[0].cnt == 1){
+				req.session.user = results[0].name
+				res.send("<script>alert('로그인 되었습니다'); location.replace('/board')</script>");
+			}
+		})
+	})
+
+	app.get('/board/logout', (req,res) => {
+		res.render('board/delete', {
+			title: "로그아웃..."
+		})
+	});
+
+	app.post('/board/logout', (req,res) => {
+		req.session.destroy(function(err){
+			res.send("<script>alert('로그아웃 되었습니다'); location.replace('/board')</script>");
+		});
 	});
 
 	app.get('/board', (req,res) => {
@@ -32,7 +64,8 @@ module.exports = (app, fs) => {
 			title:"게시판 리스트",
 			list:null,
 			err:null,
-			fullDate:fullDate
+			fullDate:fullDate,
+			session: req.session.user
 		}
 		con.query(sql, (err, results) => {
 			if (err) {
@@ -106,33 +139,33 @@ module.exports = (app, fs) => {
 			}
 			res.render('board/update', renderData)
 		})
+	});
 
-		app.post('/board/update/:idx', (req,res) => {
+	app.post('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
 		const subject = req.body.subject
 		const writer = req.body.writer
 		const content = req.body.content
-		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now() where idx =${idx}`;
+		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', change_date = now() where idx =${idx}`;
 		con.query(sql, (err, results) => {
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
 		})
-		});
+	});
 
-		app.get('/board/delete/:idx', (req,res) => {
+	app.get('/board/delete/:idx', (req,res) => {
 		var idx = req.params.idx;
 		res.render('board/delete', {
-			title: "삭제중..",
-			idx: idx
+			title: "삭제중.."
 		})
 	});
 
 	app.post('/board/delete/:idx', (req,res) => {
 		var idx = req.params.idx;
-		const sql = `delete from board where idx=${idx}`
+		const sql = `delete from board where idx=${idx}`;
+		console.log(sql);
 		con.query(sql, (err, results) => {
-			console.log(sql)
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
 		})
 	});
-	});
+
 }
