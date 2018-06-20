@@ -10,3 +10,4 @@ a { text-decoration: none; color: #000; }
 .view tr:nth-child(3) { height: 50px; }
 table, th, td { border: 1px solid #000; text-align: center; }
 .subject { width: 500px; height: 21px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.name { font-weight: bold; }

@@ -1,31 +1,31 @@
 <% include ./header.ejs %>
-	<a href="/board/update/<%= list.idx %>">글수정</a>
-	<a href="/board/delete/<%= list.idx %>">글삭제</a>
-	<table class="view" cellspacing="0">
-		<colgroup>
-			<col width="10%">
-			<col width="40%">
-			<col width="10%">
-			<col width="40%">
-		</colgroup>
-		<tr>
-			<th>작성일</th>
-			<td><%= fullDate(list.date) %></td>
-			<th rowspan="2">작성자</th>
-			<td rowspan="2"><%= list.writer %></td>
-		</tr>
-		<tr>
-			<th>최근수정일</th>
-			<td><%= fullDate(list.change_date) %></td>
-		</tr>
-		<tr>
-			<th>제목</th>
-			<td colspan="3"><%= list.subject %></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td colspan="3"><%= list.content %></td>
-		</tr>
-	</table>
-	<a href="/board">메인으로</a>
+<a href="/board/update/<%= list.idx %>">글수정</a>
+<a href="/board/delete/<%= list.idx %>">글삭제</a>
+<table class="view" cellspacing="0">
+	<colgroup>
+		<col width="10%">
+		<col width="40%">
+		<col width="10%">
+		<col width="40%">
+	</colgroup>
+	<tr>
+		<th>작성일</th>
+		<td><%= fullDate(list.date) %></td>
+		<th rowspan="2">작성자</th>
+		<td rowspan="2"><%= list.writer %></td>
+	</tr>
+	<tr>
+		<th>최근수정일</th>
+		<td><%= fullDate(list.change_date) %></td>
+	</tr>
+	<tr>
+		<th>제목</th>
+		<td colspan="3"><%= list.subject %></td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td colspan="3"><%= list.content %></td>
+	</tr>
+</table>
+<a href="/board">메인으로</a>
 <% include ./footer.ejs %>

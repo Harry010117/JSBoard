@@ -19,6 +19,15 @@ function fullDate(dateIn) {
 	return moment(dateIn).format('YYYY-MM-DD');
 }
 
+function validate(pw,repw) {
+	if(pw == repw) {
+		return true
+	}
+	else {
+		return false
+	}
+}
+
 module.exports = (app, fs) => {
 
 	app.get('/', (req,res) => {
@@ -30,7 +39,7 @@ module.exports = (app, fs) => {
 
 	app.get('/board/login', (req,res) => {
 		res.render('board/login',{
-			title:'로그인 페이지'
+			title:'로그인'
 		})
 	});
 
@@ -44,6 +53,16 @@ module.exports = (app, fs) => {
 				res.send("<script>alert('로그인 되었습니다'); location.replace('/board')</script>");
 			}
 		})
+	})
+
+	app.get('/board/join', (req,res) => {
+		res.render('board/join',{
+			title: '회원가입'
+		})
+	})
+
+	app.post('/board/join', (req,res) => {
+
 	})
 
 	app.get('/board/logout', (req,res) => {
@@ -113,7 +132,7 @@ module.exports = (app, fs) => {
 
 	app.post('/board/write', (req,res) => {
 		const subject = req.body.subject
-		const writer = req.body.writer
+		const writer = req.session.user
 		const content = req.body.content
 		const sql = `insert into board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now()`
 		con.query(sql, (err, results) => {
@@ -144,7 +163,7 @@ module.exports = (app, fs) => {
 	app.post('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
 		const subject = req.body.subject
-		const writer = req.body.writer
+		const writer = req.session.user
 		const content = req.body.content
 		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', change_date = now() where idx =${idx}`;
 		con.query(sql, (err, results) => {

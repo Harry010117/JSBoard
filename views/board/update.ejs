@@ -1,13 +1,12 @@
 <% include ./header.ejs %>
-	<form action="" method="post">
-		<fieldset>
-			<legend>게시글 수정</legend>
-			<input type="hidden" name="action" value="update">
-			<input value="<%= list.subject%>" type="text" name="subject" required>
-			<input value="<%= list.writer%>" type="text" name="writer" required>
-			<textarea cols="47" rows="15" required name="content"><%= list.content%></textarea>
-			<button type="submit">전송</button>
-		</fieldset>
-	</form>
-	<a href="/board">메인으로</a>
+<form action="" method="post">
+	<fieldset>
+		<legend>게시글 수정</legend>
+		<input type="hidden" name="action" value="update">
+		<input autocomplete="off" value="<%= list.subject%>" type="text" name="subject" required>
+		<textarea autocomplete="off" cols="47" rows="15" required name="content"><%= list.content%></textarea>
+		<button type="submit">확인</button>
+	</fieldset>
+</form>
+<a href="/board">메인으로</a>
 <% include ./footer.ejs %>

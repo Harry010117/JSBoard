@@ -1,40 +1,41 @@
 <% include ./header.ejs %>
-	<% if (session) { -%>
-		<p><%= session%></p>
-		<a href="/board/logout">로그아웃</a>
-	<% } else { -%>
-		<a href="/board/login">로그인</a>
-	<% } -%>
-	<a href="/board/write">글작성</a>
-	<% if (err == null) { %>
-	<table cellspacing="0" class="list">
-		<colgroup>
-			<col width="10%">
-			<col width="40%">
-			<col width="25%">
-			<col width="25%">
-		</colgroup>
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-		</tr>
-		<% for (var i=0, len = list.length; i<len; i++) { %>
-		<tr>
-			<td><%= list[i].idx%></td>
-			<td>
-				<a class="subject" href="./board/view/<%= list[i].idx%>">
-					<%= list[i].subject%>
-				</a>
-			</td>
-			<td><%= list[i].writer%></td>
-			<td><%= fullDate(list[i].date)%></td>
-		</tr>
-		<% } %>	
-	</table>
-	<% } else { %>
-	<p><%= err %></p>
-	<% }  %>
+<% if (session) { -%>
+<p><span class="name"><%= session%></span>님 환영합니다.</p>
+<a href="/board/logout">로그아웃</a>
+<a href="/board/write">글작성</a>
+<% } else { -%>
+<a href="/board/login">로그인</a>
+<a href="/board/join">회원가입</a>
+<% } -%>
+<% if (err == null) { %>
+<table cellspacing="0" class="list">
+	<colgroup>
+		<col width="10%">
+		<col width="40%">
+		<col width="25%">
+		<col width="25%">
+	</colgroup>
+	<tr>
+		<th>글번호</th>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+	</tr>
+	<% for (var i=0, len = list.length; i<len; i++) { %>
+	<tr>
+		<td><%= list[i].idx%></td>
+		<td>
+			<a class="subject" href="./board/view/<%= list[i].idx%>">
+				<%= list[i].subject%>
+			</a>
+		</td>
+		<td><%= list[i].writer%></td>
+		<td><%= fullDate(list[i].date)%></td>
+	</tr>
+	<% } %>	
+</table>
+<% } else { %>
+<p><%= err %></p>
+<% }  %>
 
 <% include ./footer.ejs %>
