@@ -62,7 +62,23 @@ module.exports = (app, fs) => {
 	})
 
 	app.post('/board/join', (req,res) => {
-
+		const id = req.body.id
+		const pw = req.body.pw
+		const repw = req.body.repw
+		const sql = `select count(*) as cnt from member where id = '${id}'`
+		const sql_upload = `insert into member set id = '${id}' pw = '${pw}'`
+		con.query(sql, (err,results) => {
+			if (results[0].cnt != 0) {
+				res.send("<script>alert('이미 존재하는 아이디입니다.'); location.replace('/board/join')</script>");
+				if (pw != repw) {
+					res.send("<script>alert('비밀번호가 일치하지 않습니다.'); location.replace('/board/join')</script>");
+				}
+			} else {
+				con.query(sql_upload, (err,results) => {
+				res.send("<script>alert('회원가입이 완료되었습니다.'); location.replace('/board')</script>");
+				})
+			}
+		})
 	})
 
 	app.get('/board/logout', (req,res) => {
