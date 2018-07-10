@@ -46,7 +46,7 @@ module.exports = (app, fs) => {
 	app.post('/board/login', (req,res) => {
 		const id = req.body.id
 		const pw = req.body.pw
-		const sql = `select *, count(*) as cnt from member where id = '${id}' and pw = '${pw}'`
+		const sql = `select *, count(*) as cnt from member WHERE id = '${id}' and pw = '${pw}'`
 		con.query(sql, (err, results) => {
 			if (results[0].cnt == 1){
 				req.session.user = results[0].name
@@ -65,8 +65,8 @@ module.exports = (app, fs) => {
 		const id = req.body.id
 		const pw = req.body.pw
 		const repw = req.body.repw
-		const sql = `select count(*) as cnt from member where id = '${id}'`
-		const sql_upload = `insert into member set id = '${id}' pw = '${pw}'`
+		const sql = `select count(*) as cnt from member WHERE id = '${id}'`
+		const sql_upload = `INSERT INTO member SET id = '${id}' pw = '${pw}'`
 		con.query(sql, (err,results) => {
 			if (results[0].cnt != 0) {
 				res.send("<script>alert('이미 존재하는 아이디입니다.'); location.replace('/board/join')</script>");
@@ -75,7 +75,7 @@ module.exports = (app, fs) => {
 				}
 			} else {
 				con.query(sql_upload, (err,results) => {
-				res.send("<script>alert('회원가입이 완료되었습니다.'); location.replace('/board')</script>");
+					res.send("<script>alert('회원가입이 완료되었습니다.'); location.replace('/board')</script>");
 				})
 			}
 		})
@@ -94,7 +94,7 @@ module.exports = (app, fs) => {
 	});
 
 	app.get('/board', (req,res) => {
-		const sql = "SELECT * FROM board";
+		const sql = "SELECT * FROM board order by idx desc";
 		let renderData = {
 			title:"게시판 리스트",
 			list:null,
@@ -121,12 +121,14 @@ module.exports = (app, fs) => {
 
 	app.get('/board/view/:idx', (req,res) => {
 		var idx = req.params.idx;
-		const sql = 'SELECT * FROM board where idx = '+idx;
+		const writer = req.session.user
+		const sql = 'SELECT *, writer FROM board WHERE idx = '+idx;
 		let renderData = {
 			title: "게시글 조회",
 			list:null,
 			err:null,
-			fullDate:fullDate
+			fullDate:fullDate,
+			session: writer
 		}
 		con.query(sql, (err, results) => {
 			if (err) {
@@ -150,7 +152,7 @@ module.exports = (app, fs) => {
 		const subject = req.body.subject
 		const writer = req.session.user
 		const content = req.body.content
-		const sql = `insert into board set subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now()`
+		const sql = `INSERT INTO board SET subject = '${subject}',writer = '${writer}',content = '${content}', date = now(), change_date = now()`
 		con.query(sql, (err, results) => {
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
 		})
@@ -158,7 +160,7 @@ module.exports = (app, fs) => {
 
 	app.get('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
-		const sql = 'SELECT * FROM board where idx = '+idx;
+		const sql = 'SELECT * FROM board WHERE idx = '+idx;
 		let renderData = {
 			title: "게시글 수정",
 			list:null,
@@ -179,9 +181,8 @@ module.exports = (app, fs) => {
 	app.post('/board/update/:idx', (req,res) => {
 		var idx = req.params.idx;
 		const subject = req.body.subject
-		const writer = req.session.user
 		const content = req.body.content
-		const sql = `update board set subject = '${subject}',writer = '${writer}',content = '${content}', change_date = now() where idx =${idx}`;
+		const sql = `update board SET subject = '${subject}',content = '${content}', change_date = now() WHERE idx =${idx}`;
 		con.query(sql, (err, results) => {
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");
 		})
@@ -196,7 +197,7 @@ module.exports = (app, fs) => {
 
 	app.post('/board/delete/:idx', (req,res) => {
 		var idx = req.params.idx;
-		const sql = `delete from board where idx=${idx}`;
+		const sql = `delete from board WHERE idx=${idx}`;
 		console.log(sql);
 		con.query(sql, (err, results) => {
 			res.send("<script>alert('완료되었습니다'); location.replace('/board')</script>");

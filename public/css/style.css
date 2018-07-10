@@ -1,5 +1,9 @@
 body { background: #fff; color: #000;}
 form { width: 40%; height: 75%; }
+fieldset { display: flex; text-align: center; }
+fieldset input { width: 100%; height: 50px; }
+fieldset textarea { width: calc(100% - 2px); height: 400px; }
+fieldset button { margin: 10px auto; width: 60px; height: 40px; background: #afa; border: 1px solid #666; border-radius: 10px; }
 textarea { resize: none; }
 a { text-decoration: none; color: #000; }
 .list { width: 1200px; }

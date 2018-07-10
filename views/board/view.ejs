@@ -1,6 +1,8 @@
 <% include ./header.ejs %>
+<% if (session == list.writer ) { -%>
 <a href="/board/update/<%= list.idx %>">글수정</a>
 <a href="/board/delete/<%= list.idx %>">글삭제</a>
+<% } -%>
 <table class="view" cellspacing="0">
 	<colgroup>
 		<col width="10%">
